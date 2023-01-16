@@ -1,0 +1,70 @@
+#include <iostream>                          
+#include <algorithm>                      
+
+using namespace std;
+int** create2DArray(int r, int c) // r (rows) c(clumns)
+{ 
+	int** array2D = new int *[r]; 
+	for (int i = 0; i < r; i++) 
+		array2D[i] = new int[c]; 
+
+	for (int i = 0; i < r; i++) 
+		for (int j = 0; j < c; j++) 
+			array2D[i][j] = rand() % 101; 
+
+	return array2D; 
+} 
+
+ 
+int** sort2DArray(int** array2D, int r, int c, int columnIndex) 
+{ 
+	for (int i = 0; i < r; i++) 
+		sort(array2D[i], array2D[i] + c); 
+
+	for (int i = 0; i < r - 1; i++) 
+		for (int j = i + 1; j < r; j++) 
+			if (array2D[i][columnIndex] > array2D[j][columnIndex]) 
+				swap(array2D[i], array2D[j]); 
+
+	return array2D; 
+} 
+
+
+int main() 
+{ 
+	int r, c;
+	cout << "Enter the number of rows: ";
+	cin >> r;
+	cout << "Enter the number of columns: ";
+	cin >> c;
+
+	int** array2D = create2DArray(r, c); 
+
+	 
+	cout << "Random 2D Array:" << endl; 
+	for (int i = 0; i < r; i++) { 
+		for (int j = 0; j < c; j++) 
+			cout << array2D[i][j] << " "; 
+		cout << endl; 
+	} 
+
+	int columnIndex;
+	cout << "Enter the column index for sorting: ";
+	cin >> columnIndex;
+
+	array2D = sort2DArray(array2D, r, c, columnIndex); 
+ 
+	cout << "Sorted 2D Array:" << endl; 
+	for (int i = 0; i < r; i++) { 
+	for (int j = 0; j < c; j++) 
+		cout << array2D[i][j] << " "; 
+		cout << endl; 
+	} 
+
+
+	for (int i = 0; i < r; i++) 
+		delete array2D[i]; 
+	delete[] array2D; 
+
+	return 0; 
+}
